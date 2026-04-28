@@ -3,7 +3,7 @@ Long-term experiments on recording technology, AI and personal projects。
 
 
 # project structure
-本项目是使用Astro + TailwindCSS + Vue3 + Markdown/MDX 构建的静态博客。
+本项目是使用Astro + TS + Vue3 + TailwindCSS + Markdown/MDX 构建的静态博客。
 
 Astro：负责路由、页面、静态构建、SEO
 TailwindCSS：负责样式
