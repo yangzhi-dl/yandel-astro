@@ -1,0 +1,236 @@
+---
+---
+
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>扬德尔实验室 | Yandel Lab</title>
+    <meta name="description" content="扬德尔实验室，记录技术、AI 与个人项目的长期实验。" />
+    <style>
+      :root {
+        font-family:
+          Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+          "Segoe UI", "Microsoft YaHei", sans-serif;
+        color: #e5e7eb;
+        background: #0f172a;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        background:
+          radial-gradient(circle at top left, rgba(59, 130, 246, 0.25), transparent 32rem),
+          radial-gradient(circle at bottom right, rgba(16, 185, 129, 0.18), transparent 30rem),
+          #0f172a;
+      }
+
+      main {
+        width: min(1080px, calc(100% - 32px));
+        margin: 0 auto;
+        padding: 72px 0;
+      }
+
+      nav {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 96px;
+      }
+
+      .logo {
+        font-size: 20px;
+        font-weight: 700;
+        letter-spacing: 0.04em;
+      }
+
+      .nav-links {
+        display: flex;
+        gap: 24px;
+        font-size: 14px;
+      }
+
+      a {
+        color: #cbd5e1;
+        text-decoration: none;
+      }
+
+      a:hover {
+        color: #ffffff;
+      }
+
+      .hero {
+        max-width: 760px;
+      }
+
+      .badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 8px 14px;
+        border: 1px solid rgba(148, 163, 184, 0.25);
+        border-radius: 999px;
+        color: #93c5fd;
+        background: rgba(15, 23, 42, 0.6);
+        margin-bottom: 28px;
+        font-size: 14px;
+      }
+
+      h1 {
+        margin: 0;
+        font-size: clamp(44px, 8vw, 84px);
+        line-height: 1.05;
+        letter-spacing: -0.06em;
+      }
+
+      .highlight {
+        color: #60a5fa;
+      }
+
+      .desc {
+        margin-top: 28px;
+        max-width: 680px;
+        font-size: 18px;
+        line-height: 1.9;
+        color: #cbd5e1;
+      }
+
+      .actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 16px;
+        margin-top: 36px;
+      }
+
+      .button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 44px;
+        padding: 0 20px;
+        border-radius: 12px;
+        font-weight: 600;
+      }
+
+      .primary {
+        color: #0f172a;
+        background: #e5e7eb;
+      }
+
+      .secondary {
+        color: #e5e7eb;
+        border: 1px solid rgba(148, 163, 184, 0.3);
+      }
+
+      .cards {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 18px;
+        margin-top: 96px;
+      }
+
+      .card {
+        padding: 24px;
+        border: 1px solid rgba(148, 163, 184, 0.2);
+        border-radius: 24px;
+        background: rgba(15, 23, 42, 0.6);
+        backdrop-filter: blur(14px);
+      }
+
+      .card h2 {
+        margin: 0 0 12px;
+        font-size: 18px;
+      }
+
+      .card p {
+        margin: 0;
+        color: #94a3b8;
+        line-height: 1.8;
+        font-size: 14px;
+      }
+
+      footer {
+        margin-top: 96px;
+        color: #64748b;
+        font-size: 14px;
+      }
+
+      @media (max-width: 760px) {
+        nav {
+          align-items: flex-start;
+          gap: 18px;
+          flex-direction: column;
+          margin-bottom: 72px;
+        }
+
+        .cards {
+          grid-template-columns: 1fr;
+          margin-top: 72px;
+        }
+
+        main {
+          padding: 40px 0;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <main>
+      <nav>
+        <div class="logo">Yandel Lab</div>
+        <div class="nav-links">
+          <a href="/">首页</a>
+          <a href="#projects">项目</a>
+          <a href="#notes">笔记</a>
+          <a href="#about">关于</a>
+        </div>
+      </nav>
+
+      <section class="hero">
+        <div class="badge">🚀 扬德尔实验室 · Yandel Lab</div>
+
+        <h1>
+          记录技术、AI 与<br />
+          <span class="highlight">个人项目</span>的长期实验
+        </h1>
+
+        <p class="desc">
+          这里是 Yandel 的个人主页。以后会放一些技术笔记、项目展示、AI 工具、
+          开发踩坑记录，以及正在构建中的个人作品。
+        </p>
+
+        <div class="actions">
+          <a class="button primary" href="#projects">查看项目</a>
+          <a class="button secondary" href="#notes">阅读笔记</a>
+        </div>
+      </section>
+
+      <section class="cards" id="projects">
+        <article class="card">
+          <h2>项目展示</h2>
+          <p>记录正在开发或已经完成的个人项目，包括 Web 应用、后端服务和 AI 工具。</p>
+        </article>
+
+        <article class="card" id="notes">
+          <h2>技术笔记</h2>
+          <p>整理 Java、前端、服务器部署、Docker、Nginx、云服务等实践经验。</p>
+        </article>
+
+        <article class="card" id="about">
+          <h2>关于我</h2>
+          <p>一个持续学习和折腾技术的开发者，正在把想法慢慢做成真实可访问的作品。</p>
+        </article>
+      </section>
+
+      <footer>
+        © 2026 Yandel Lab · yandel.top
+      </footer>
+    </main>
+  </body>
+</html>
