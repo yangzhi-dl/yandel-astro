@@ -1,1 +1,31 @@
-<!--FeatureCard.astro：首页卡片组件-->
+---
+interface Props {
+  title: string;
+  description: string;
+  meta?: string;
+  href?: string;
+  id?: string;
+}
+
+const { title, description, meta, href, id } = Astro.props;
+---
+
+<article
+  id={id}
+  class="group rounded-lg border border-white/10 bg-white/[0.035] p-5 transition-colors hover:border-emerald-300/35 hover:bg-white/[0.055]"
+>
+  {meta && <div class="mb-4 text-xs uppercase text-emerald-200/80">{meta}</div>}
+  <h2 class="m-0 mb-3 text-lg font-semibold text-stone-100">{title}</h2>
+  <p class="m-0 text-sm leading-7 text-stone-400">{description}</p>
+
+  {
+    href && (
+      <a
+        class="mt-5 inline-flex text-sm font-medium text-stone-200 transition-colors group-hover:text-emerald-200"
+        href={href}
+      >
+        进入查看
+      </a>
+    )
+  }
+</article>

@@ -1,1 +1,68 @@
-<!--HeroSection.astro：首页大标题区域-->
+---
+import type { HeroAction } from "../data/home";
+
+interface Props {
+  eyebrow: string;
+  title: string;
+  highlight: string;
+  description: string;
+  actions: HeroAction[];
+  metaItems: string[];
+}
+
+const { eyebrow, title, highlight, description, actions, metaItems } = Astro.props;
+
+const actionClasses = {
+  primary: "bg-emerald-300 text-stone-950 hover:bg-emerald-200",
+  secondary:
+    "border border-white/15 text-stone-200 hover:border-white/35 hover:bg-white/[0.05] hover:text-white",
+};
+---
+
+<section class="grid gap-10 lg:grid-cols-[1.08fr_0.92fr] lg:items-end">
+  <div class="max-w-3xl">
+    <div class="mb-5 text-sm font-medium uppercase text-emerald-200/80">
+      {eyebrow}
+    </div>
+
+    <h1 class="m-0 text-5xl font-semibold leading-[1.06] text-stone-50 md:text-7xl">
+      <span class="block text-emerald-200">{highlight}</span>
+      {title}
+    </h1>
+
+    <p class="mt-7 max-w-2xl text-lg leading-8 text-stone-300">
+      {description}
+    </p>
+
+    <div class="mt-8 flex flex-wrap gap-3">
+      {
+        actions.map((action) => (
+          <a
+            class:list={[
+              "inline-flex min-h-11 items-center justify-center rounded-lg px-5 text-sm font-semibold transition-colors",
+              actionClasses[action.variant],
+            ]}
+            href={action.href}
+          >
+            {action.label}
+          </a>
+        ))
+      }
+    </div>
+  </div>
+
+  <!--<div class="rounded-lg border border-white/10 bg-white/[0.035] p-5">-->
+  <!--  <div class="mb-5 text-sm text-stone-400">当前关注</div>-->
+  <!--  <div class="grid grid-cols-2 gap-3">-->
+  <!--  {-->
+  <!--    metaItems.map((item) => (-->
+  <!--      <div-->
+  <!--        class="rounded-lg border border-white/10 bg-stone-950/45 px-4 py-3 text-sm text-stone-200"-->
+  <!--      >-->
+  <!--        {item}-->
+  <!--      </div>-->
+  <!--    ))-->
+  <!--  }-->
+  <!--  </div>-->
+  <!--</div>-->
+</section>

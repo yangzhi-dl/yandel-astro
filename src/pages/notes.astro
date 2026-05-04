@@ -1,0 +1,71 @@
+---
+import AppFooter from "../components/AppFooter.astro";
+import AppHeader from "../components/AppHeader.vue";
+import NoteCard from "../components/NoteCard.astro";
+import PageHeader from "../components/PageHeader.astro";
+import SectionHeader from "../components/SectionHeader.astro";
+import { noteSources, notes, notesPage, siteConfig } from "../data/home";
+import BaseLayout from "../layouts/BaseLayout.astro";
+---
+
+<BaseLayout title={notesPage.seo.title} description={notesPage.seo.description}>
+  <main class="site-shell">
+    <AppHeader
+      brand={siteConfig.brand}
+      navItems={siteConfig.navItems}
+      currentPath={Astro.url.pathname}
+    />
+
+    <div class="space-y-16">
+      <PageHeader
+        eyebrow={notesPage.header.eyebrow}
+        title={notesPage.header.title}
+        description={notesPage.header.description}
+      />
+
+      <section>
+        <SectionHeader
+          title="文章平台"
+          description="外部平台先作为入口规划，真实链接补上后会自动变成跳转按钮。"
+        />
+        <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+          {
+            noteSources.map((source) => (
+              <article class="rounded-lg border border-white/10 bg-white/[0.035] p-5">
+                <div class="text-sm font-medium text-sky-200">{source.status}</div>
+                <h2 class="mt-4 text-xl font-semibold text-stone-50">{source.label}</h2>
+                <p class="mt-3 text-sm leading-7 text-stone-400">{source.description}</p>
+                {source.href && (
+                  <a
+                    class="mt-5 inline-flex text-sm font-medium text-sky-200 hover:text-sky-100"
+                    href={source.href}
+                  >
+                    前往平台
+                  </a>
+                )}
+              </article>
+            ))
+          }
+        </div>
+      </section>
+
+      <section>
+        <SectionHeader
+          title="精选主题"
+          description="这些主题适合后续拆成站内文章或同步到外部平台。"
+        />
+        <div class="grid gap-4 md:grid-cols-3">
+          {notes.map((note) => <NoteCard note={note} />)}
+        </div>
+      </section>
+    </div>
+
+    <AppFooter
+      brand={siteConfig.brand}
+      description={siteConfig.footer.description}
+      navItems={siteConfig.navItems}
+      copyright={siteConfig.footer.copyright}
+      domain={siteConfig.footer.domain}
+    />
+  </main>
+</BaseLayout>

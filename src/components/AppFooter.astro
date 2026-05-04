@@ -1,1 +1,40 @@
-<!--AppFooter.astro：页脚-->
+---
+import type { NavItem } from "../data/home";
+
+interface Props {
+  brand: string;
+  description: string;
+  navItems: NavItem[];
+  copyright: string;
+  domain: string;
+}
+
+const { brand, description, navItems, copyright, domain } = Astro.props;
+---
+
+<footer class="mt-24 border-t border-white/10 pt-8 text-sm text-stone-400">
+  <div class="flex flex-col gap-6 md:flex-row md:items-start md:justify-between">
+    <div>
+      <div class="font-semibold text-stone-100">{brand}</div>
+      <p class="mt-2 max-w-md leading-7">{description}</p>
+    </div>
+
+    <nav class="flex flex-wrap gap-3">
+      {
+        navItems.map((item) => (
+          <a
+            class="rounded-lg px-3 py-2 transition-colors hover:bg-white/[0.06] hover:text-white"
+            href={item.href}
+          >
+            {item.label}
+          </a>
+        ))
+      }
+    </nav>
+  </div>
+
+  <div class="mt-8 flex flex-wrap items-center justify-between gap-3 text-stone-500">
+    <span>{copyright}</span>
+    <span>{domain}</span>
+  </div>
+</footer>

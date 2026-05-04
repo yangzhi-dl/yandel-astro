@@ -1,0 +1,95 @@
+---
+import AppFooter from "../components/AppFooter.astro";
+import AppHeader from "../components/AppHeader.vue";
+import PageHeader from "../components/PageHeader.astro";
+import SectionHeader from "../components/SectionHeader.astro";
+import { aboutPage, siteConfig } from "../data/home";
+import BaseLayout from "../layouts/BaseLayout.astro";
+---
+
+<BaseLayout title={aboutPage.seo.title} description={aboutPage.seo.description}>
+  <main class="site-shell">
+    <AppHeader
+      brand={siteConfig.brand}
+      navItems={siteConfig.navItems}
+      currentPath={Astro.url.pathname}
+    />
+
+    <div class="space-y-16">
+      <PageHeader
+        eyebrow={aboutPage.header.eyebrow}
+        title={aboutPage.header.title}
+        description={aboutPage.header.description}
+      />
+
+      <section class="grid gap-8 lg:grid-cols-[0.85fr_1.15fr]">
+        <div>
+          <SectionHeader title="个人介绍" />
+        </div>
+        <div class="space-y-4">
+          {
+            aboutPage.profile.map((item) => (
+              <p class="rounded-lg border border-white/10 bg-white/[0.035] p-5 leading-8 text-stone-300">
+                {item}
+              </p>
+            ))
+          }
+        </div>
+      </section>
+
+      <section>
+        <SectionHeader title="技术栈" description="偏工程实践的组合，服务于项目构建和长期维护。" />
+        <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+          {
+            aboutPage.stacks.map((stack) => (
+              <article class="rounded-lg border border-white/10 bg-white/[0.035] p-5">
+                <h2 class="text-lg font-semibold text-stone-50">{stack.title}</h2>
+                <div class="mt-4 flex flex-wrap gap-2">
+                  {stack.items.map((item) => (
+                    <span class="rounded-md bg-white/[0.06] px-2.5 py-1 text-sm text-stone-300">
+                      {item}
+                    </span>
+                  ))}
+                </div>
+              </article>
+            ))
+          }
+        </div>
+      </section>
+
+      <section class="grid gap-4 md:grid-cols-2">
+        {
+          aboutPage.interests.map((interest) => (
+            <article class="rounded-lg border border-white/10 bg-white/[0.035] p-6">
+              <div class="text-sm font-medium uppercase text-emerald-200/80">Interest</div>
+              <h2 class="mt-4 text-2xl font-semibold text-stone-50">{interest.title}</h2>
+              <p class="mt-4 leading-8 text-stone-400">{interest.description}</p>
+            </article>
+          ))
+        }
+      </section>
+
+      <section class="rounded-lg border border-white/10 bg-white/[0.035] p-6">
+        <SectionHeader title="联系方式" description="后续可以在这里补充真实邮箱、社交平台或项目仓库入口。" />
+        <div class="grid gap-3 md:grid-cols-2">
+          {
+            aboutPage.contacts.map((contact) => (
+              <div class="rounded-lg border border-white/10 bg-stone-950/45 p-4">
+                <div class="text-sm text-stone-500">{contact.label}</div>
+                <div class="mt-2 font-medium text-stone-100">{contact.value}</div>
+              </div>
+            ))
+          }
+        </div>
+      </section>
+    </div>
+
+    <AppFooter
+      brand={siteConfig.brand}
+      description={siteConfig.footer.description}
+      navItems={siteConfig.navItems}
+      copyright={siteConfig.footer.copyright}
+      domain={siteConfig.footer.domain}
+    />
+  </main>
+</BaseLayout>

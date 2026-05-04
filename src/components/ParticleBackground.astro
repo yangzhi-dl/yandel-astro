@@ -1,0 +1,113 @@
+<div id="particles-bg" aria-hidden="true"></div>
+
+<script>
+  import { tsParticles } from "@tsparticles/engine";
+  import { loadSlim } from "@tsparticles/slim";
+
+  const particleContainerId = "particles-bg";
+  const reduceMotionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+  const mobileQuery = window.matchMedia("(max-width: 767px)");
+
+  let initialized = false;
+
+  const getParticleOptions = () => {
+    const isMobile = mobileQuery.matches;
+    const reduceMotion = reduceMotionQuery.matches;
+
+    return {
+      fullScreen: {
+        enable: false,
+      },
+      detectRetina: true,
+      fpsLimit: isMobile ? 30 : 60,
+      particles: {
+        number: {
+          value: isMobile || reduceMotion ? 10 : 42,
+          density: {
+            enable: true,
+            area: 900,
+          },
+        },
+        color: {
+          value: "#5ee6b5",
+        },
+        opacity: {
+          value: {
+            min: 0.08,
+            max: 0.26,
+          },
+        },
+        size: {
+          value: {
+            min: 1,
+            max: 2.2,
+          },
+        },
+        links: {
+          enable: !isMobile,
+          distance: 130,
+          color: "#5ee6b5",
+          opacity: 0.14,
+          width: 1,
+        },
+        move: {
+          enable: !reduceMotion,
+          speed: isMobile ? 0.12 : 0.28,
+          direction: "none",
+          outModes: {
+            default: "bounce",
+          },
+        },
+      },
+      interactivity: {
+        detectsOn: "window",
+        events: {
+          onHover: {
+            enable: !isMobile && !reduceMotion,
+            mode: "grab",
+          },
+          onClick: {
+            enable: !isMobile && !reduceMotion,
+            mode: "push",
+          },
+          resize: {
+            enable: true,
+          },
+        },
+        modes: {
+          grab: {
+            distance: 150,
+            links: {
+              opacity: 0.35,
+            },
+          },
+          push: {
+            quantity: 2,
+          },
+        },
+      },
+    };
+  };
+
+  const initParticles = async () => {
+    if (initialized) {
+      await tsParticles.load({
+        id: particleContainerId,
+        options: getParticleOptions(),
+      });
+      return;
+    }
+
+    await loadSlim(tsParticles);
+    initialized = true;
+    await tsParticles.load({
+      id: particleContainerId,
+      options: getParticleOptions(),
+    });
+  };
+
+  initParticles();
+
+  mobileQuery.addEventListener("change", initParticles);
+  reduceMotionQuery.addEventListener("change", initParticles);
+</script>
