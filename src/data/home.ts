@@ -73,7 +73,7 @@ export const projects: ProjectItem[] = [
     year: "2025",
     tags: ["RAG", "SpringBoot","DeepSeek","WebSocket"],
     highlights: ["面向真实使用场景沉淀功能", "保留后续接入账号和数据源的空间"],
-    href: "/projects",
+    href: "https://pkg.yandel.top",
     featured: true,
   },
   {
