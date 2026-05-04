@@ -9,10 +9,10 @@ const { project } = Astro.props;
 ---
 
 <article
-  class="flex h-full flex-col rounded-lg border border-white/10 bg-white/[0.035] p-5 transition-colors hover:border-emerald-300/35 hover:bg-white/[0.055]"
+  class="glass-panel flex h-full flex-col rounded-lg p-5 transition-colors"
 >
   <div class="mb-5 flex flex-wrap items-center gap-2 text-xs text-stone-400">
-    <span class="rounded-md border border-white/10 px-2.5 py-1 text-emerald-200">
+    <span class="glass-chip rounded-md px-2.5 py-1 text-emerald-200">
       {project.status}
     </span>
     <span>{project.year}</span>
@@ -24,7 +24,7 @@ const { project } = Astro.props;
   <div class="mt-5 flex flex-wrap gap-2">
     {
       project.tags.map((tag) => (
-        <span class="rounded-md bg-white/[0.06] px-2.5 py-1 text-xs text-stone-300">
+        <span class="glass-chip rounded-md px-2.5 py-1 text-xs text-stone-300">
           {tag}
         </span>
       ))

@@ -27,20 +27,43 @@ body {
     margin: 0;
     min-height: 100vh;
     color: #e7e5e4;
-    background:
-        linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-        linear-gradient(180deg, #111312 0%, #0c0d0d 52%, #090a0a 100%);
-    background-size: 56px 56px, 56px 56px, 100% 100%;
+    background: #060808 url("/blog-background.png") center top / cover fixed no-repeat;
     text-rendering: geometricPrecision;
+}
+
+body::before,
+body::after {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    content: "";
+}
+
+body::before {
+    z-index: 0;
+    background:
+        radial-gradient(circle at 64% 18%, rgba(94, 230, 181, 0.08), transparent 24rem),
+        linear-gradient(90deg, rgba(5, 8, 9, 0.34) 0%, rgba(5, 8, 9, 0.16) 54%, rgba(5, 8, 9, 0.08) 100%),
+        linear-gradient(180deg, rgba(6, 8, 8, 0.06) 0%, rgba(6, 8, 8, 0.22) 76%, rgba(6, 8, 8, 0.42) 100%);
+    backdrop-filter: blur(0.8px) saturate(0.96);
+}
+
+body::after {
+    z-index: 1;
+    background:
+        linear-gradient(rgba(255, 255, 255, 0.026) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.022) 1px, transparent 1px);
+    background-size: 56px 56px;
+    mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.92), rgba(0, 0, 0, 0.5));
 }
 
 #particles-bg {
     position: fixed;
     inset: 0;
-    z-index: 0;
+    z-index: 2;
     pointer-events: none;
-    opacity: 0.72;
+    opacity: 0.92;
+    mix-blend-mode: screen;
 }
 
 #particles-bg canvas {
@@ -50,6 +73,30 @@ body {
 a {
     color: inherit;
     text-decoration: none;
+}
+
+.glass-panel {
+    border: 1px solid rgba(255, 255, 255, 0.09);
+    background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.045), rgba(255, 255, 255, 0.02)),
+        rgba(5, 8, 9, 0.62);
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.055),
+        0 20px 60px rgba(0, 0, 0, 0.24);
+    backdrop-filter: blur(6px) saturate(1.05);
+}
+
+.glass-panel:hover {
+    border-color: rgba(94, 230, 181, 0.28);
+    background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.024)),
+        rgba(5, 8, 9, 0.68);
+}
+
+.glass-chip {
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: rgba(255, 255, 255, 0.055);
+    backdrop-filter: blur(4px);
 }
 
 p,
@@ -62,7 +109,7 @@ h3 {
 
 .site-shell {
     position: relative;
-    z-index: 1;
+    z-index: 3;
     width: min(1120px, calc(100% - 32px));
     margin: 0 auto;
     padding: 40px 0;
@@ -72,7 +119,7 @@ header,
 main,
 footer {
     position: relative;
-    z-index: 1;
+    z-index: 3;
 }
 
 @media (min-width: 768px) {
@@ -82,7 +129,19 @@ footer {
 }
 
 @media (max-width: 767px), (prefers-reduced-motion: reduce) {
+    body {
+        background-attachment: scroll;
+    }
+
     #particles-bg {
-        opacity: 0.36;
+        opacity: 0.42;
+    }
+
+    body::before {
+        backdrop-filter: blur(0.4px) saturate(0.94);
+    }
+
+    .glass-panel {
+        backdrop-filter: blur(4px) saturate(1);
     }
 }

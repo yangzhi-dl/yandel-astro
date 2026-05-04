@@ -25,9 +25,21 @@ const actionClasses = {
       {eyebrow}
     </div>
 
-    <h1 class="m-0 text-5xl font-semibold leading-[1.06] text-stone-50 md:text-7xl">
-      <span class="block text-emerald-200">{highlight}</span>
-      {title}
+    <h1
+      class="m-0 text-5xl font-semibold leading-[1.06] text-stone-50 md:text-7xl"
+      aria-label={`${highlight}${title}`}
+      data-typing-heading
+    >
+      <span
+        class="block min-h-[1.06em] text-emerald-200"
+        data-typing-line
+        data-text={highlight}
+      >
+        {highlight}
+      </span>
+      <span class="block min-h-[2.12em]" data-typing-line data-text={title}>
+        {title}
+      </span>
     </h1>
 
     <p class="mt-7 max-w-2xl text-lg leading-8 text-stone-300">
@@ -51,18 +63,98 @@ const actionClasses = {
     </div>
   </div>
 
-  <!--<div class="rounded-lg border border-white/10 bg-white/[0.035] p-5">-->
-  <!--  <div class="mb-5 text-sm text-stone-400">当前关注</div>-->
-  <!--  <div class="grid grid-cols-2 gap-3">-->
-  <!--  {-->
-  <!--    metaItems.map((item) => (-->
-  <!--      <div-->
-  <!--        class="rounded-lg border border-white/10 bg-stone-950/45 px-4 py-3 text-sm text-stone-200"-->
-  <!--      >-->
-  <!--        {item}-->
-  <!--      </div>-->
-  <!--    ))-->
-  <!--  }-->
-  <!--  </div>-->
-  <!--</div>-->
 </section>
+
+<script>
+  const heading = document.querySelector("[data-typing-heading]");
+  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+
+  if (heading && !reduceMotion.matches) {
+    const lines = Array.from(
+      heading.querySelectorAll<HTMLElement>("[data-typing-line]"),
+    );
+    const typeDelay = 72;
+    const linePause = 180;
+
+    lines.forEach((line) => {
+      line.textContent = "";
+    });
+
+    const caret = document.createElement("span");
+    caret.className = "typing-caret";
+    caret.setAttribute("aria-hidden", "true");
+    const scopeAttr = Array.from(heading.attributes).find((a) =>
+      a.name.startsWith("data-astro-cid-"),
+    )?.name;
+    if (scopeAttr) caret.setAttribute(scopeAttr, "");
+
+    const wait = (time: number) =>
+      new Promise((resolve) => {
+        window.setTimeout(resolve, time);
+      });
+
+    const typeLine = async (line: HTMLElement) => {
+      const text = line.dataset.text ?? "";
+      line.textContent = "";
+      line.appendChild(caret);
+
+      for (const char of Array.from(text)) {
+        caret.insertAdjacentHTML("beforebegin", char);
+        await wait(typeDelay);
+      }
+    };
+
+    const runTyping = async () => {
+      for (const line of lines) {
+        await typeLine(line);
+        await wait(linePause);
+      }
+
+      caret.classList.add("is-idle");
+    };
+
+    runTyping();
+  }
+</script>
+
+<style>
+  [data-typing-heading] {
+    position: relative;
+  }
+
+  .typing-caret {
+    display: inline-block;
+    width: 0;
+    height: 0.9em;
+    margin-left: 0;
+    position: relative;
+    animation: caret-blink 0.9s step-end infinite;
+  }
+
+  .typing-caret::before {
+    content: "";
+    position: absolute;
+    top: 0.12em;
+    left: 0;
+    width: 0.08em;
+    height: 100%;
+    background: #a7f3d0;
+    box-shadow: 0 0 18px rgba(94, 230, 181, 0.42);
+  }
+
+  .typing-caret.is-idle {
+    opacity: 0.62;
+  }
+
+  @keyframes caret-blink {
+    50% {
+      opacity: 0;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .typing-caret {
+      display: none;
+    }
+  }
+</style>

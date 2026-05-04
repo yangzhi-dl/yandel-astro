@@ -9,10 +9,10 @@ const { note } = Astro.props;
 ---
 
 <article
-  class="rounded-lg border border-white/10 bg-white/[0.035] p-5 transition-colors hover:border-sky-300/30 hover:bg-white/[0.055]"
+  class="glass-panel rounded-lg p-5 transition-colors hover:border-sky-300/30"
 >
   <div class="mb-4 flex flex-wrap items-center gap-2 text-xs text-stone-400">
-    <span class="rounded-md border border-white/10 px-2.5 py-1 text-sky-200">
+    <span class="glass-chip rounded-md px-2.5 py-1 text-sky-200">
       {note.platform}
     </span>
     <span>{note.category}</span>

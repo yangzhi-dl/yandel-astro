@@ -66,12 +66,12 @@ export const siteConfig = {
 
 export const projects: ProjectItem[] = [
   {
-    title: "SmartPAI",
+    title: "PKG-RAG毕设项目",
     summary:
-      "围绕 AI 辅助效率搭建的个人项目，关注提示词工作流、知识整理和可复用工具链。",
-    status: "构建中",
-    year: "2026",
-    tags: ["AI", "Workflow", "Product"],
+      "围绕RAG索引增强和SpringBoot实现的毕设项目。",
+    status: "已完成",
+    year: "2025",
+    tags: ["RAG", "SpringBoot","DeepSeek","WebSocket"],
     highlights: ["面向真实使用场景沉淀功能", "保留后续接入账号和数据源的空间"],
     href: "/projects",
     featured: true,
@@ -162,7 +162,7 @@ export const homePage = {
     title: "记录技术、AI与个人项目的长期实验",
     highlight: "Yandel Lab",
     description:
-      "这里是Yandel的个人主页。以后会放一些技术笔记、项目展示、AI工具、开发踩坑记录，以及正在构建中的个人作品。",
+      "这里是Yandel的个人主页。存放一些技术笔记、项目展示、AI工具、开发踩坑记录，以及正在构建中的个人作品。",
     actions: [
       { label: "看精选项目", href: "/projects", variant: "primary" },
       { label: "读精选文章", href: "/notes", variant: "secondary" },
@@ -205,7 +205,7 @@ export const projectsPage = {
     eyebrow: "Projects",
     title: "项目列表",
     description:
-      "这里放更像作品集的内容：正在构建的产品、个人站点本身，以及能解决具体问题的小工具。",
+      "正在构建的产品、个人站点本身，以及能解决具体问题的小工具。",
   },
 };
 

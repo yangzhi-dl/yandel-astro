@@ -29,7 +29,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
         <div class="space-y-4">
           {
             aboutPage.profile.map((item) => (
-              <p class="rounded-lg border border-white/10 bg-white/[0.035] p-5 leading-8 text-stone-300">
+              <p class="glass-panel rounded-lg p-5 leading-8 text-stone-300">
                 {item}
               </p>
             ))
@@ -42,11 +42,11 @@ import BaseLayout from "../layouts/BaseLayout.astro";
         <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
           {
             aboutPage.stacks.map((stack) => (
-              <article class="rounded-lg border border-white/10 bg-white/[0.035] p-5">
+              <article class="glass-panel rounded-lg p-5">
                 <h2 class="text-lg font-semibold text-stone-50">{stack.title}</h2>
                 <div class="mt-4 flex flex-wrap gap-2">
                   {stack.items.map((item) => (
-                    <span class="rounded-md bg-white/[0.06] px-2.5 py-1 text-sm text-stone-300">
+                    <span class="glass-chip rounded-md px-2.5 py-1 text-sm text-stone-300">
                       {item}
                     </span>
                   ))}
@@ -60,7 +60,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
       <section class="grid gap-4 md:grid-cols-2">
         {
           aboutPage.interests.map((interest) => (
-            <article class="rounded-lg border border-white/10 bg-white/[0.035] p-6">
+            <article class="glass-panel rounded-lg p-6">
               <div class="text-sm font-medium uppercase text-emerald-200/80">Interest</div>
               <h2 class="mt-4 text-2xl font-semibold text-stone-50">{interest.title}</h2>
               <p class="mt-4 leading-8 text-stone-400">{interest.description}</p>
@@ -69,12 +69,12 @@ import BaseLayout from "../layouts/BaseLayout.astro";
         }
       </section>
 
-      <section class="rounded-lg border border-white/10 bg-white/[0.035] p-6">
+      <section class="glass-panel rounded-lg p-6">
         <SectionHeader title="联系方式" description="后续可以在这里补充真实邮箱、社交平台或项目仓库入口。" />
         <div class="grid gap-3 md:grid-cols-2">
           {
             aboutPage.contacts.map((contact) => (
-              <div class="rounded-lg border border-white/10 bg-stone-950/45 p-4">
+              <div class="glass-chip rounded-lg p-4">
                 <div class="text-sm text-stone-500">{contact.label}</div>
                 <div class="mt-2 font-medium text-stone-100">{contact.value}</div>
               </div>

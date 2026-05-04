@@ -12,7 +12,7 @@ const { title, description, meta, href, id } = Astro.props;
 
 <article
   id={id}
-  class="group rounded-lg border border-white/10 bg-white/[0.035] p-5 transition-colors hover:border-emerald-300/35 hover:bg-white/[0.055]"
+  class="glass-panel group rounded-lg p-5 transition-colors"
 >
   {meta && <div class="mb-4 text-xs uppercase text-emerald-200/80">{meta}</div>}
   <h2 class="m-0 mb-3 text-lg font-semibold text-stone-100">{title}</h2>
