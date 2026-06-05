@@ -1,0 +1,23 @@
+---
+import type { EntryLink } from "../data/home";
+import FeatureCard from "./FeatureCard.astro";
+
+interface Props {
+  links: EntryLink[];
+}
+
+const { links } = Astro.props;
+---
+
+<section class="grid grid-cols-1 gap-4 md:grid-cols-3" aria-label="站点入口">
+  {
+    links.map((link) => (
+      <FeatureCard
+        title={link.title}
+        description={link.description}
+        href={link.href}
+        meta={link.meta}
+      />
+    ))
+  }
+</section>

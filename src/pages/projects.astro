@@ -1,0 +1,38 @@
+---
+import AppFooter from "../components/AppFooter.astro";
+import AppHeader from "../components/AppHeader.vue";
+import PageHeader from "../components/PageHeader.astro";
+import ProjectCard from "../components/ProjectCard.astro";
+import { projects, projectsPage, siteConfig } from "../data/home";
+import BaseLayout from "../layouts/BaseLayout.astro";
+---
+
+<BaseLayout title={projectsPage.seo.title} description={projectsPage.seo.description}>
+  <main class="site-shell">
+    <AppHeader
+      brand={siteConfig.brand}
+      navItems={siteConfig.navItems}
+      currentPath={Astro.url.pathname}
+    />
+
+    <div class="space-y-12">
+      <PageHeader
+        eyebrow={projectsPage.header.eyebrow}
+        title={projectsPage.header.title}
+        description={projectsPage.header.description}
+      />
+
+      <section class="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+        {projects.map((project) => <ProjectCard project={project} />)}
+      </section>
+    </div>
+
+    <AppFooter
+      brand={siteConfig.brand}
+      description={siteConfig.footer.description}
+      navItems={siteConfig.navItems}
+      copyright={siteConfig.footer.copyright}
+      domain={siteConfig.footer.domain}
+    />
+  </main>
+</BaseLayout>

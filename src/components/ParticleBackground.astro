@@ -1,0 +1,132 @@
+<div id="particles-bg" aria-hidden="true"></div>
+
+<script>
+  import { tsParticles, type Container } from "@tsparticles/engine";
+  import { loadSlim } from "@tsparticles/slim";
+
+  const particleContainerId = "particles-bg";
+  const reduceMotionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+  const mobileQuery = window.matchMedia("(max-width: 767px)");
+
+  let engineReady: Promise<void> | undefined;
+  let particleContainer: Container | undefined;
+
+  const getParticleOptions = () => {
+    const isMobile = mobileQuery.matches;
+    const reduceMotion = reduceMotionQuery.matches;
+
+    return {
+      fullScreen: {
+        enable: false,
+      },
+      detectRetina: true,
+      fpsLimit: isMobile ? 30 : 60,
+      particles: {
+        number: {
+          value: isMobile || reduceMotion ? 14 : 86,
+          density: {
+            enable: true,
+            area: 760,
+          },
+        },
+        color: {
+          value: ["#5ee6b5", "#a7f3d0", "#38d6bd"],
+        },
+        opacity: {
+          value: {
+            min: 0.12,
+            max: 0.4,
+          },
+        },
+        size: {
+          value: {
+            min: 1,
+            max: 3,
+          },
+        },
+        links: {
+          enable: !isMobile,
+          distance: 170,
+          color: "#5ee6b5",
+          opacity: 0.2,
+          width: 1,
+        },
+        move: {
+          enable: !reduceMotion,
+          speed: isMobile ? 0.14 : 0.44,
+          direction: "none",
+          outModes: {
+            default: "bounce",
+          },
+        },
+      },
+      interactivity: {
+        detectsOn: "window",
+        events: {
+          onHover: {
+            enable: !isMobile && !reduceMotion,
+            mode: ["grab", "bubble"],
+          },
+          onClick: {
+            enable: !isMobile && !reduceMotion,
+            mode: "push",
+          },
+          resize: {
+            enable: true,
+          },
+        },
+        modes: {
+          bubble: {
+            distance: 135,
+            duration: 0.4,
+            opacity: 0.55,
+            size: 4.4,
+          },
+          grab: {
+            distance: 190,
+            links: {
+              opacity: 0.54,
+            },
+          },
+          push: {
+            quantity: 3,
+          },
+        },
+      },
+    };
+  };
+
+  const initParticles = async () => {
+    try {
+      if (!engineReady) {
+        engineReady = loadSlim(tsParticles);
+      }
+
+      await engineReady;
+      particleContainer?.destroy();
+      particleContainer = await tsParticles.load({
+        id: particleContainerId,
+        options: getParticleOptions(),
+      });
+    } catch (error) {
+      console.warn("[ParticleBackground] tsParticles failed to initialize.", error);
+    }
+  };
+
+  const addMediaListener = (
+    query: MediaQueryList,
+    handler: () => void | Promise<void>,
+  ) => {
+    if (query.addEventListener) {
+      query.addEventListener("change", handler);
+      return;
+    }
+
+    query.addListener(handler);
+  };
+
+  initParticles();
+
+  addMediaListener(mobileQuery, initParticles);
+  addMediaListener(reduceMotionQuery, initParticles);
+</script>
