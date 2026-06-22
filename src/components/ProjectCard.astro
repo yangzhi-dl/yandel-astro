@@ -9,33 +9,33 @@ const { project } = Astro.props;
 ---
 
 <article
-  class="glass-panel flex h-full flex-col rounded-lg p-5 transition-colors"
+  class="glass-panel flex h-full flex-col rounded-lg p-5"
 >
-  <div class="mb-5 flex flex-wrap items-center gap-2 text-xs text-stone-400">
-    <span class="glass-chip rounded-md px-2.5 py-1 text-emerald-200">
+  <div class="mb-5 flex flex-wrap items-center gap-2 text-xs text-slate-400">
+    <span class="glass-chip rounded-md px-2.5 py-1 text-cyan-200">
       {project.status}
     </span>
     <span>{project.year}</span>
   </div>
 
-  <h2 class="m-0 text-xl font-semibold text-stone-50">{project.title}</h2>
-  <p class="mt-3 leading-7 text-stone-400">{project.summary}</p>
+  <h2 class="m-0 text-xl font-semibold text-white">{project.title}</h2>
+  <p class="mt-3 leading-7 text-slate-400">{project.summary}</p>
 
   <div class="mt-5 flex flex-wrap gap-2">
     {
       project.tags.map((tag) => (
-        <span class="glass-chip rounded-md px-2.5 py-1 text-xs text-stone-300">
+        <span class="glass-chip rounded-md px-2.5 py-1 text-xs text-slate-300">
           {tag}
         </span>
       ))
     }
   </div>
 
-  <ul class="mt-5 space-y-2 text-sm leading-6 text-stone-300">
+  <ul class="mt-5 space-y-2 text-sm leading-6 text-slate-300">
     {
       project.highlights.map((highlight) => (
         <li class="flex gap-2">
-          <span class="mt-2 h-1.5 w-1.5 shrink-0 rounded-sm bg-emerald-300"></span>
+          <span class="mt-2 h-1.5 w-1.5 shrink-0 rounded-sm bg-cyan-300 shadow-[0_0_12px_rgba(34,211,238,0.4)]"></span>
           <span>{highlight}</span>
         </li>
       ))
@@ -45,7 +45,7 @@ const { project } = Astro.props;
   {
     project.href && (
       <a
-        class="mt-auto pt-6 text-sm font-medium text-emerald-200 hover:text-emerald-100"
+        class="mt-auto pt-6 text-sm font-medium text-cyan-200 transition-colors hover:text-white"
         href={project.href}
         target="_blank"
         rel="noopener noreferrer"

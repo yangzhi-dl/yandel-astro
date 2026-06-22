@@ -11,47 +11,89 @@ interface Props {
 }
 
 const { eyebrow, title, highlight, description, actions, metaItems } = Astro.props;
+const titleBreakPoint = "个人项目";
+const titleBreakIndex = title.indexOf(titleBreakPoint);
+const titleLines =
+  titleBreakIndex > 0
+    ? [title.slice(0, titleBreakIndex), title.slice(titleBreakIndex)]
+    : [title];
 
 const actionClasses = {
-  primary: "bg-emerald-300 text-stone-950 hover:bg-emerald-200",
+  primary:
+    "border border-cyan-200/70 bg-cyan-200 text-slate-950 shadow-[0_0_34px_rgba(34,211,238,0.22)] hover:bg-white",
   secondary:
-    "border border-white/15 text-stone-200 hover:border-white/35 hover:bg-white/[0.05] hover:text-white",
+    "border border-white/15 text-slate-200 hover:border-cyan-200/35 hover:bg-white/[0.05] hover:text-white",
 };
+
+//节点
+const techNodes = [
+  { label: "yandel-pkg", x: 50, y: 18, level: "primary" },
+  { label: "yandel-video-agent", x: 76, y: 34, level: "secondary" },
+  { label: "RAG", x: 30, y: 36, level: "secondary" },
+  { label: "AI", x: 52, y: 48, level: "primary" },
+  { label: "OCR", x: 20, y: 58, level: "tertiary" },
+  { label: "Fabric", x: 74, y: 62, level: "tertiary" },
+  { label: "Redis", x: 38, y: 76, level: "secondary" },
+  { label: "Spring Boot", x: 60, y: 82, level: "secondary" },
+  { label: "Docker", x: 86, y: 78, level: "tertiary" },
+  { label: "Spring Cloud", x: 18, y: 70, level: "tertiary" },
+];
+
+//连接线
+const techLinks = [
+  ["yandel-pkg", "RAG"],
+  ["yandel-pkg", "yandel-video-agent"],
+  ["yandel-pkg", "AI"],
+  ["RAG", "OCR"],
+  ["RAG", "AI"],
+  ["yandel-video-agent", "Fabric"],
+  ["yandel-video-agent", "AI"],
+  ["AI", "Redis"],
+  ["AI", "Spring Boot"],
+  ["Fabric", "Docker"],
+  ["Redis", "Spring Boot"],
+  ["Spring Boot", "Docker"],
+  ["Spring Cloud", "Redis"]
+];
+
+const nodeByLabel = new Map(techNodes.map((node) => [node.label, node]));
 ---
 
-<section class="grid gap-10 lg:grid-cols-[1.08fr_0.92fr] lg:items-end">
-  <div class="max-w-3xl">
-    <div class="mb-5 text-sm font-medium uppercase text-emerald-200/80">
+<section class="hero-section grid gap-10 lg:grid-cols-[1.08fr_0.92fr] lg:items-end" data-hero-section data-reveal>
+  <div class="hero-copy max-w-3xl">
+    <div class="mb-5 text-sm font-medium uppercase tracking-[0.18em] text-cyan-200/80">
       {eyebrow}
     </div>
 
     <h1
-      class="m-0 text-5xl font-semibold leading-[1.06] text-stone-50 md:text-7xl"
+      class="hero-title m-0 text-5xl font-semibold leading-[1.06] text-white md:text-6xl xl:text-7xl"
       aria-label={`${highlight}${title}`}
-      data-typing-heading
     >
       <span
-        class="block min-h-[1.06em] text-emerald-200"
-        data-typing-line
-        data-text={highlight}
+        class="hero-title-line block min-h-[1.06em] text-cyan-200"
+        style="--reveal-delay: 80ms"
       >
         {highlight}
       </span>
-      <span class="block min-h-[2.12em]" data-typing-line data-text={title}>
-        {title}
+      <span class="hero-title-line block min-h-[2.12em]" style="--reveal-delay: 210ms">
+        {
+          titleLines.map((line) => (
+            <span class="hero-title-break">{line}</span>
+          ))
+        }
       </span>
     </h1>
 
-    <p class="mt-7 max-w-2xl text-lg leading-8 text-stone-300">
+    <p class="hero-description mt-7 max-w-2xl text-lg leading-8 text-slate-300" style="--reveal-delay: 360ms">
       {description}
     </p>
 
-    <div class="mt-8 flex flex-wrap gap-3">
+    <div class="hero-actions mt-8 flex flex-wrap gap-3" style="--reveal-delay: 480ms">
       {
         actions.map((action) => (
           <a
             class:list={[
-              "inline-flex min-h-11 items-center justify-center rounded-lg px-5 text-sm font-semibold transition-colors",
+              "inline-flex min-h-11 items-center justify-center rounded-lg px-5 text-sm font-semibold transition-all duration-300",
               actionClasses[action.variant],
             ]}
             href={action.href}
@@ -61,100 +103,337 @@ const actionClasses = {
         ))
       }
     </div>
+
+    <div class="hero-meta mt-7 flex flex-wrap gap-2" aria-label="技术标签" style="--reveal-delay: 580ms">
+      {
+        metaItems.map((item) => (
+          <span class="glass-chip rounded-md px-2.5 py-1 text-xs text-slate-300">
+            {item}
+          </span>
+        ))
+      }
+    </div>
   </div>
 
+  <div class="tech-map-wrap" data-tech-map>
+    <div class="tech-map" aria-label="动态技术图谱">
+      <div class="tech-map-orbit" aria-hidden="true"></div>
+      <svg class="tech-map-lines" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+        <defs>
+          <linearGradient id="tech-line-gradient" x1="0%" x2="100%" y1="0%" y2="100%">
+            <stop offset="0%" stop-color="#22d3ee" stop-opacity="0.18" />
+            <stop offset="100%" stop-color="#7c3aed" stop-opacity="0.16" />
+          </linearGradient>
+        </defs>
+        {
+          techLinks.map(([from, to]) => {
+            const start = nodeByLabel.get(from);
+            const end = nodeByLabel.get(to);
+            if (!start || !end) return null;
+
+            return (
+              <line
+                x1={start.x}
+                y1={start.y}
+                x2={end.x}
+                y2={end.y}
+                vector-effect="non-scaling-stroke"
+              />
+            );
+          })
+        }
+      </svg>
+
+      {
+        techNodes.map((node, index) => (
+          <span
+            class:list={["tech-node", `tech-node-${node.level}`]}
+            style={`--x:${node.x}%; --y:${node.y}%; --float-delay:${index * 0.48}s`}
+          >
+            {node.label}
+          </span>
+        ))
+      }
+    </div>
+  </div>
 </section>
 
 <script>
-  const heading = document.querySelector("[data-typing-heading]");
+  const hero = document.querySelector<HTMLElement>("[data-hero-section]");
+  const techMap = document.querySelector<HTMLElement>("[data-tech-map]");
   const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
 
-  if (heading && !reduceMotion.matches) {
-    const lines = Array.from(
-      heading.querySelectorAll<HTMLElement>("[data-typing-line]"),
+  if (hero && !reduceMotion.matches) {
+    requestAnimationFrame(() => hero.classList.add("is-ready"));
+  } else {
+    hero?.classList.add("is-ready");
+  }
+
+  if (techMap && !reduceMotion.matches) {
+    techMap.addEventListener(
+      "pointermove",
+      (event) => {
+        const rect = techMap.getBoundingClientRect();
+        const x = (event.clientX - rect.left) / rect.width - 0.5;
+        const y = (event.clientY - rect.top) / rect.height - 0.5;
+
+        techMap.style.setProperty("--tilt-x", `${-y * 6}deg`);
+        techMap.style.setProperty("--tilt-y", `${x * 8}deg`);
+        techMap.style.setProperty("--pan-x", `${x * 12}px`);
+        techMap.style.setProperty("--pan-y", `${y * 12}px`);
+      },
+      { passive: true },
     );
-    const typeDelay = 72;
-    const linePause = 180;
 
-    lines.forEach((line) => {
-      line.textContent = "";
+    techMap.addEventListener("pointerleave", () => {
+      techMap.style.setProperty("--tilt-x", "0deg");
+      techMap.style.setProperty("--tilt-y", "0deg");
+      techMap.style.setProperty("--pan-x", "0px");
+      techMap.style.setProperty("--pan-y", "0px");
     });
-
-    const caret = document.createElement("span");
-    caret.className = "typing-caret";
-    caret.setAttribute("aria-hidden", "true");
-    const scopeAttr = Array.from(heading.attributes).find((a) =>
-      a.name.startsWith("data-astro-cid-"),
-    )?.name;
-    if (scopeAttr) caret.setAttribute(scopeAttr, "");
-
-    const wait = (time: number) =>
-      new Promise((resolve) => {
-        window.setTimeout(resolve, time);
-      });
-
-    const typeLine = async (line: HTMLElement) => {
-      const text = line.dataset.text ?? "";
-      line.textContent = "";
-      line.appendChild(caret);
-
-      for (const char of Array.from(text)) {
-        caret.insertAdjacentHTML("beforebegin", char);
-        await wait(typeDelay);
-      }
-    };
-
-    const runTyping = async () => {
-      for (const line of lines) {
-        await typeLine(line);
-        await wait(linePause);
-      }
-
-      caret.classList.add("is-idle");
-    };
-
-    runTyping();
   }
 </script>
 
 <style>
-  [data-typing-heading] {
+  .hero-section {
     position: relative;
   }
 
-  .typing-caret {
-    display: inline-block;
-    width: 0;
-    height: 0.9em;
-    margin-left: 0;
-    position: relative;
-    animation: caret-blink 0.9s step-end infinite;
+  .hero-title-line,
+  .hero-description,
+  .hero-actions,
+  .hero-meta {
+    opacity: 0;
+    filter: blur(14px);
+    transform: translateY(22px);
+    transition:
+      opacity 980ms ease,
+      filter 980ms ease,
+      transform 980ms ease;
+    transition-delay: var(--reveal-delay, 0ms);
   }
 
-  .typing-caret::before {
+  .hero-section.is-ready .hero-title-line,
+  .hero-section.is-ready .hero-description,
+  .hero-section.is-ready .hero-actions,
+  .hero-section.is-ready .hero-meta {
+    opacity: 1;
+    filter: blur(0);
+    transform: translateY(0);
+  }
+
+  .hero-title {
+    letter-spacing: 0;
+    text-shadow: 0 0 42px rgba(34, 211, 238, 0.08);
+  }
+
+  .hero-title-line {
+    max-width: 11.5em;
+  }
+
+  .hero-title-break {
+    display: block;
+    white-space: nowrap;
+  }
+
+  .tech-map-wrap {
+    --tilt-x: 0deg;
+    --tilt-y: 0deg;
+    --pan-x: 0px;
+    --pan-y: 0px;
+    min-height: 390px;
+    perspective: 1200px;
+  }
+
+  .tech-map {
+    position: relative;
+    width: min(100%, 460px);
+    aspect-ratio: 1 / 1;
+    margin-left: auto;
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    background:
+      radial-gradient(circle at 50% 42%, rgba(34, 211, 238, 0.12), transparent 30%),
+      radial-gradient(circle at 62% 22%, rgba(124, 58, 237, 0.11), transparent 28%),
+      linear-gradient(180deg, rgba(255, 255, 255, 0.054), rgba(255, 255, 255, 0.018));
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.07),
+      0 24px 80px rgba(0, 0, 0, 0.34),
+      0 0 60px rgba(34, 211, 238, 0.08);
+    overflow: hidden;
+    transform:
+      translate3d(var(--pan-x), var(--pan-y), 0)
+      rotateX(var(--tilt-x))
+      rotateY(var(--tilt-y));
+    transition: transform 360ms ease;
+    transform-style: preserve-3d;
+    backdrop-filter: blur(16px) saturate(1.08);
+  }
+
+  .tech-map::before,
+  .tech-map::after {
     content: "";
     position: absolute;
-    top: 0.12em;
-    left: 0;
-    width: 0.08em;
+    pointer-events: none;
+  }
+
+  .tech-map::before {
+    inset: 0;
+    background:
+      linear-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
+    background-size: 48px 48px;
+    opacity: 0.45;
+    mask-image: radial-gradient(circle at 50% 45%, #000, transparent 74%);
+  }
+
+  .tech-map::after {
+    inset: 12%;
+    border: 1px solid rgba(34, 211, 238, 0.08);
+    border-radius: 999px;
+    box-shadow:
+      0 0 34px rgba(34, 211, 238, 0.09),
+      inset 0 0 36px rgba(124, 58, 237, 0.065);
+  }
+
+  .tech-map-orbit {
+    position: absolute;
+    inset: 18%;
+    border: 1px solid rgba(255, 255, 255, 0.055);
+    border-radius: 999px;
+    animation: orbit-pulse 9s ease-in-out infinite;
+  }
+
+  .tech-map-lines {
+    position: absolute;
+    inset: 0;
+    width: 100%;
     height: 100%;
-    background: #a7f3d0;
-    box-shadow: 0 0 18px rgba(94, 230, 181, 0.42);
+    overflow: visible;
   }
 
-  .typing-caret.is-idle {
-    opacity: 0.62;
+  .tech-map-lines line {
+    stroke: url("#tech-line-gradient");
+    stroke-width: 1;
+    opacity: 0.8;
   }
 
-  @keyframes caret-blink {
+  .tech-node {
+    position: absolute;
+    left: var(--x);
+    top: var(--y);
+    z-index: 2;
+    display: inline-flex;
+    min-height: 32px;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.095);
+    background: rgba(2, 6, 23, 0.62);
+    padding: 0.45rem 0.7rem;
+    color: #e0f2fe;
+    font-size: 0.78rem;
+    font-weight: 600;
+    white-space: nowrap;
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.08),
+      0 0 20px rgba(34, 211, 238, 0.08);
+    transform: translate(-50%, -50%);
+    animation: node-float 7s ease-in-out infinite;
+    animation-delay: var(--float-delay);
+    backdrop-filter: blur(10px);
+  }
+
+  .tech-node-primary {
+    border-color: rgba(34, 211, 238, 0.24);
+    color: #ffffff;
+    background: rgba(8, 47, 73, 0.5);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.1),
+      0 0 30px rgba(34, 211, 238, 0.12);
+  }
+
+  .tech-node-tertiary {
+    color: #cbd5e1;
+    opacity: 0.88;
+  }
+
+  @keyframes node-float {
+    0%,
+    100% {
+      translate: 0 0;
+    }
+
     50% {
-      opacity: 0;
+      translate: 0 -8px;
+    }
+  }
+
+  @keyframes orbit-pulse {
+    0%,
+    100% {
+      transform: scale(1);
+      opacity: 0.56;
+    }
+
+    50% {
+      transform: scale(1.045);
+      opacity: 0.9;
+    }
+  }
+
+  @media (max-width: 1023px) {
+    .tech-map-wrap {
+      min-height: auto;
+    }
+
+    .tech-map {
+      margin-right: auto;
+      margin-left: 0;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .hero-title {
+      font-size: clamp(2.45rem, 11.8vw, 3.25rem);
+    }
+
+    .hero-title-line {
+      max-width: 8em;
+    }
+
+    .hero-title-break {
+      white-space: normal;
+    }
+
+    .tech-map {
+      width: 100%;
+    }
+
+    .tech-node {
+      max-width: 112px;
+      padding-inline: 0.55rem;
+      font-size: 0.68rem;
     }
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .typing-caret {
-      display: none;
+    .hero-title-line,
+    .hero-description,
+    .hero-actions,
+    .hero-meta {
+      opacity: 1;
+      filter: none;
+      transform: none;
+      transition: none;
+    }
+
+    .tech-map,
+    .tech-node,
+    .tech-map-orbit {
+      animation: none;
+      transition: none;
+      transform: none;
     }
   }
 </style>

@@ -12,16 +12,16 @@ const { title, description, meta, href, id } = Astro.props;
 
 <article
   id={id}
-  class="glass-panel group rounded-lg p-5 transition-colors"
+  class="glass-panel group rounded-lg p-5"
 >
-  {meta && <div class="mb-4 text-xs uppercase text-emerald-200/80">{meta}</div>}
-  <h2 class="m-0 mb-3 text-lg font-semibold text-stone-100">{title}</h2>
-  <p class="m-0 text-sm leading-7 text-stone-400">{description}</p>
+  {meta && <div class="mb-4 text-xs uppercase tracking-[0.16em] text-cyan-200/80">{meta}</div>}
+  <h2 class="m-0 mb-3 text-lg font-semibold text-white">{title}</h2>
+  <p class="m-0 text-sm leading-7 text-slate-400">{description}</p>
 
   {
     href && (
       <a
-        class="mt-5 inline-flex text-sm font-medium text-stone-200 transition-colors group-hover:text-emerald-200"
+        class="mt-5 inline-flex text-sm font-medium text-slate-200 transition-colors group-hover:text-cyan-200"
         href={href}
       >
         进入查看

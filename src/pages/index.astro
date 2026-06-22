@@ -36,15 +36,15 @@ const featuredNotes = notes.filter((note) => note.featured);
         metaItems={homePage.hero.metaItems}
       />
 
-      <section class="grid gap-8 lg:grid-cols-[0.8fr_1.2fr] lg:items-start">
+      <section class="grid gap-8 lg:grid-cols-[0.8fr_1.2fr] lg:items-start" data-reveal>
         <div>
-          <div class="mb-4 text-sm font-medium uppercase text-emerald-200/80">
+          <div class="mb-4 text-sm font-medium uppercase tracking-[0.18em] text-cyan-200/80">
             Intro
           </div>
-          <h2 class="m-0 text-3xl font-semibold text-stone-50">
+          <h2 class="m-0 text-3xl font-semibold text-white">
             {homePage.intro.title}
           </h2>
-          <p class="mt-4 leading-8 text-stone-400">
+          <p class="mt-4 leading-8 text-slate-400">
             {homePage.intro.description}
           </p>
         </div>
@@ -52,7 +52,7 @@ const featuredNotes = notes.filter((note) => note.featured);
         <HomeFeatureGrid links={homePage.entryLinks} />
       </section>
 
-      <section>
+      <section data-reveal>
         <SectionHeader
           title="精选项目"
           description="先放最能代表当前方向的几个项目，后续可以自然扩展成项目详情页。"
@@ -64,7 +64,7 @@ const featuredNotes = notes.filter((note) => note.featured);
         </div>
       </section>
 
-      <section>
+      <section data-reveal>
         <SectionHeader
           title="精选文章"
           description="文章入口先保持轻量，等外部平台和站内 Markdown 内容补齐后直接替换数据。"

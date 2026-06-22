@@ -22,14 +22,14 @@ import BaseLayout from "../layouts/BaseLayout.astro";
         description={aboutPage.header.description}
       />
 
-      <section class="grid gap-8 lg:grid-cols-[0.85fr_1.15fr]">
+      <section class="grid gap-8 lg:grid-cols-[0.85fr_1.15fr]" data-reveal>
         <div>
           <SectionHeader title="个人介绍" />
         </div>
         <div class="space-y-4">
           {
             aboutPage.profile.map((item) => (
-              <p class="glass-panel rounded-lg p-5 leading-8 text-stone-300">
+              <p class="glass-panel rounded-lg p-5 leading-8 text-slate-300">
                 {item}
               </p>
             ))
@@ -37,16 +37,16 @@ import BaseLayout from "../layouts/BaseLayout.astro";
         </div>
       </section>
 
-      <section>
+      <section data-reveal>
         <SectionHeader title="技术栈" description="偏工程实践的组合，服务于项目构建和长期维护。" />
         <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
           {
             aboutPage.stacks.map((stack) => (
               <article class="glass-panel rounded-lg p-5">
-                <h2 class="text-lg font-semibold text-stone-50">{stack.title}</h2>
+                <h2 class="text-lg font-semibold text-white">{stack.title}</h2>
                 <div class="mt-4 flex flex-wrap gap-2">
                   {stack.items.map((item) => (
-                    <span class="glass-chip rounded-md px-2.5 py-1 text-sm text-stone-300">
+                    <span class="glass-chip rounded-md px-2.5 py-1 text-sm text-slate-300">
                       {item}
                     </span>
                   ))}
@@ -57,26 +57,26 @@ import BaseLayout from "../layouts/BaseLayout.astro";
         </div>
       </section>
 
-      <section class="grid gap-4 md:grid-cols-2">
+      <section class="grid gap-4 md:grid-cols-2" data-reveal>
         {
           aboutPage.interests.map((interest) => (
             <article class="glass-panel rounded-lg p-6">
-              <div class="text-sm font-medium uppercase text-emerald-200/80">Interest</div>
-              <h2 class="mt-4 text-2xl font-semibold text-stone-50">{interest.title}</h2>
-              <p class="mt-4 leading-8 text-stone-400">{interest.description}</p>
+              <div class="text-sm font-medium uppercase tracking-[0.16em] text-cyan-200/80">Interest</div>
+              <h2 class="mt-4 text-2xl font-semibold text-white">{interest.title}</h2>
+              <p class="mt-4 leading-8 text-slate-400">{interest.description}</p>
             </article>
           ))
         }
       </section>
 
-      <section class="glass-panel rounded-lg p-6">
+      <section class="glass-panel rounded-lg p-6" data-reveal>
         <SectionHeader title="联系方式" description="后续可以在这里补充真实邮箱、社交平台或项目仓库入口。" />
         <div class="grid gap-3 md:grid-cols-2">
           {
             aboutPage.contacts.map((contact) => (
               <div class="glass-chip rounded-lg p-4">
-                <div class="text-sm text-stone-500">{contact.label}</div>
-                <div class="mt-2 font-medium text-stone-100">{contact.value}</div>
+                <div class="text-sm text-slate-500">{contact.label}</div>
+                <div class="mt-2 font-medium text-white">{contact.value}</div>
               </div>
             ))
           }

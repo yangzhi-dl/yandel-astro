@@ -12,10 +12,10 @@ interface Props {
 const { brand, description, navItems, copyright, domain } = Astro.props;
 ---
 
-<footer class="mt-24 border-t border-white/10 pt-8 text-sm text-stone-400">
+<footer class="mt-24 border-t border-white/10 pt-8 text-sm text-slate-400" data-reveal>
   <div class="flex flex-col gap-6 md:flex-row md:items-start md:justify-between">
     <div>
-      <div class="font-semibold text-stone-100">{brand}</div>
+      <div class="font-semibold text-white">{brand}</div>
       <p class="mt-2 max-w-md leading-7">{description}</p>
     </div>
 
@@ -33,7 +33,7 @@ const { brand, description, navItems, copyright, domain } = Astro.props;
     </nav>
   </div>
 
-  <div class="mt-8 flex flex-wrap items-center justify-between gap-3 text-stone-500">
+  <div class="mt-8 flex flex-wrap items-center justify-between gap-3 text-slate-500">
     <span>{copyright}</span>
     <span>{domain}</span>
   </div>
